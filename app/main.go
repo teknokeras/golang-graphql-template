@@ -6,8 +6,6 @@ import (
 	"log"
 
 	"github.com/graphql-go/graphql"
-
-	"github.com/teknokeras/golang-graphql-template/core"
 )
 
 func main() {
