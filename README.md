@@ -1,3 +1,4 @@
 # golang-graphql-template
 This is template for Golang project
-Coba
+
+## Still in the making
