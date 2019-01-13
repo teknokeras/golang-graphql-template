@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-
 	"github.com/graphql-go/graphql"
 )
 
@@ -32,7 +31,6 @@ func main() {
 		}
 	`
 
-	fmt.Printf(core.Cetak())
 	params := graphql.Params{Schema: schema, RequestString: query}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
