@@ -10,6 +10,8 @@ services:
   api:
     image: webapp-go
     build: .
+    env_file:
+      - .env
     volumes:
       - ./app:/app
     ports:
