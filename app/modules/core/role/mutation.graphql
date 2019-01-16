@@ -1,0 +1,3 @@
+addRole(role: RoleInput!): Role
+updateRole(role: RoleInput!): Role
+deleteRole(roleID: ID!): Boolean

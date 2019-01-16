@@ -1,0 +1,5 @@
+allUsers: [User]
+getUserById(id: ID!): User
+getUserByName(name: String!): User
+getUserByEmail(email: String!): User
+getUserByRoleName(role: String!): [User]

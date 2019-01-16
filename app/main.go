@@ -1,42 +1,53 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
-	"github.com/graphql-go/graphql"
+
+	"github.com/jinzhu/gorm"
+
+	"github.com/teknokeras/golang-graphql-template/app/schema"
+	"github.com/teknokeras/golang-graphql-template/app/db"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/role"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user"
 )
 
 func main() {
-	// Schema
-	fields := graphql.Fields{
-		"hello": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return "world", nil
-			},
-		},
-	}
-	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
-	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
-	schema, err := graphql.NewSchema(schemaConfig)
+	var database, err = db.NewDatabase()
+
 	if err != nil {
-		log.Fatalf("failed to create new schema, error: %v", err)
+		fmt.Println("Database cannot be initiated")
+		fmt.Println(err)
 	}
 
-	// Query
-	query := `
-		{
-			hello
-		}
-	`
+	initDatabase(database)
 
-	params := graphql.Params{Schema: schema, RequestString: query}
-	r := graphql.Do(params)
-	if len(r.Errors) > 0 {
-		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
+	var schema = schema.BuildSchema()
+	fmt.Println(schema)
+}
+
+func initDatabase(db *gorm.DB) {
+	*db.DropTableIfExists(&user.User{}, &role.Role{})
+	*db.AutoMigrate(&user.User{}, &role.Role{})
+
+	var role = role.Role{Name: "administrator"}
+
+	err := *db.Create(&role).Error
+
+	if err != nil{
+		return
 	}
-	rJSON, _ := json.Marshal(r)
-	fmt.Printf("%s \n", rJSON) // {“data”:{“hello”:”world”}}
+
+	err = *db.Where("name = ?", "administrator").First(&role).Error
+	if err != nil {
+		return nil
+	}
+
+	var admin = user.User{Name: "admin", email:"admin@go.com", password:"testing", RoleID: &role.id}
+
+	err = *db.Create(&admin).Error
+
+	if err != nil{
+		return
+	}
 
 }

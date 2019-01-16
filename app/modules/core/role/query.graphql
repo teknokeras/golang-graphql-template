@@ -1,0 +1,3 @@
+allRoles: [Role]
+getRoleById(id: ID!): Role
+getRoleByName(name: String!): Role
