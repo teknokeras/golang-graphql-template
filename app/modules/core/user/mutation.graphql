@@ -1,3 +1,4 @@
 addUser(user: UserInput!): User
 updateUser(user: UserInput!): User
 deleteUser(userID: ID!): Boolean
+login(email: String!, password: String!): Tokens

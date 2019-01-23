@@ -13,3 +13,13 @@ input UserInput {
   password: String!
   roleID: ID
 }
+
+type UserConnection {
+  totalCount: Int!
+  users: [User]
+}
+
+type Tokens {
+  accessToken: String!
+  refreshToken: String!
+}

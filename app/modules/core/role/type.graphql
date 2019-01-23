@@ -8,3 +8,8 @@ input RoleInput {
   id: ID
   name: String!
 }
+
+type RoleConnection {
+	totalCount: Int!
+	roles: [Role]
+}

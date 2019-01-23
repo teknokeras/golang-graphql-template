@@ -84,7 +84,7 @@ func buildSchemaType(moduleName string) string{
 	return typeString
 }
 
-func BuildSchema() string{
+func Build() string{
 	var schemaBuilder strings.Builder
 
 	var schemaHead = `

@@ -1,78 +1,140 @@
 package main
 
+/*
+import (
+    "fmt"
+
+    "github.com/go-pg/pg"
+    "github.com/go-pg/pg/orm"
+)
+
+type User struct {
+    Id     int64
+    Name   string
+    Emails []string
+}
+
+func (u User) String() string {
+    return fmt.Sprintf("User<%d %s %v>", u.Id, u.Name, u.Emails)
+}
+
+type Story struct {
+    Id       int64
+    Title    string
+    AuthorId int64
+    Author   *User
+}
+
+func (s Story) String() string {
+    return fmt.Sprintf("Story<%d %s %s>", s.Id, s.Title, s.Author)
+}
+
+func ExampleDB_Model() {
+    db := pg.Connect(&pg.Options{
+        User: "appdb",
+        Password: "letmein",
+        Database: "golangdb",
+        Addr: "db:5432",
+    })
+    defer db.Close()
+
+    err := createSchema(db)
+    if err != nil {
+        panic(err)
+    }
+
+    user1 := &User{
+        Name:   "admin",
+        Emails: []string{"admin1@admin", "admin2@admin"},
+    }
+    err = db.Insert(user1)
+    if err != nil {
+        panic(err)
+    }
+
+    err = db.Insert(&User{
+        Name:   "root",
+        Emails: []string{"root1@root", "root2@root"},
+    })
+    if err != nil {
+        panic(err)
+    }
+
+    story1 := &Story{
+        Title:    "Cool story",
+        AuthorId: user1.Id,
+    }
+    err = db.Insert(story1)
+    if err != nil {
+        panic(err)
+    }
+
+    // Select user by primary key.
+    user := &User{Id: user1.Id}
+    err = db.Select(user)
+    if err != nil {
+        panic(err)
+    }
+
+    // Select all users.
+    var users []User
+    err = db.Model(&users).Select()
+    if err != nil {
+        panic(err)
+    }
+
+    // Select story and associated author in one query.
+    story := new(Story)
+    err = db.Model(story).
+        Relation("Author").
+        Where("story.id = ?", story1.Id).
+        Select()
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Println(user)
+    fmt.Println(users)
+    fmt.Println(story)
+    // Output: User<1 admin [admin1@admin admin2@admin]>
+    // [User<1 admin [admin1@admin admin2@admin]> User<2 root [root1@root root2@root]>]
+    // Story<1 Cool story User<1 admin [admin1@admin admin2@admin]>>
+}
+
+func createSchema(db *pg.DB) error {
+    for _, model := range []interface{}{(*User)(nil), (*Story)(nil)} {
+        err := db.CreateTable(model, &orm.CreateTableOptions{
+            IfNotExists: true,
+        })
+        if err != nil {
+            return err
+        }
+    }
+    return nil
+}
+
+func main() {
+	ExampleDB_Model()
+}
+*/
+
 import (
 	"fmt"
-
-	"github.com/jinzhu/gorm"
-
-	"github.com/teknokeras/golang-graphql-template/app/schema"
+	//schemaBuilder "github.com/teknokeras/golang-graphql-template/app/schema"
 	"github.com/teknokeras/golang-graphql-template/app/db"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user"
+//	"github.com/teknokeras/golang-graphql-template/app/graphiql"
+//	"github.com/teknokeras/golang-graphql-template/app/modules/core/role"
+//	"github.com/teknokeras/golang-graphql-template/app/modules/core/user"
 )
 
 func main() {
-	var database, err = db.NewDatabase()
+	//schemaString := schemaBuilder.Build()
 
-	if err != nil {
-		fmt.Println("Database cannot be initiated")
-		fmt.Println(err)
-	}
+	database := db.NewDB()
 
-	initDatabase(database)
-
-	var u role.Role
-	err = database.First(&u, 1).Error
-	if err != nil {
-		fmt.Println("Error getting role")
-		fmt.Println(err)
-	}
-	fmt.Println(u.Name)
-
-	//initDatabase(database)
-
-	var schema = schema.BuildSchema()
-	fmt.Println(schema)
-}
-
-
-func initDatabase(db *gorm.DB) {
-
-	var role = role.Role{Name: "administrator"}
-
-	err := db.Create(&role).Error
-
-	if err != nil{
-		return
-	}
-
-	err = db.Where("name=?","administrator").First(&role).Error
-
-	if err != nil{
-		return
-	}
-
-	fmt.Println(role.Name)
-	fmt.Println(role.ID)
-
-	var user = user.User{Name:"admin", Email:"admin@go.com", Password:"passwd", RoleID: role.ID}
-
-	err = db.Create(&user).Error
-
-	if err != nil{
-		return
-	}
-
-	err = db.First(&user, 1).Error
-
-	if err != nil{
-		return
-	}
-
-	fmt.Println(user.Name)
-	fmt.Println(user.Password)
-	fmt.Println(user.Email)
-	fmt.Println(user.ID)
-
-
+    if (database != nil){
+        fmt.Println("not null")
+    }else{
+        fmt.Println("null")
+    }
 }
