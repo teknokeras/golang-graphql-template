@@ -1,6 +1,6 @@
-package user
+package model
 
-import "github.com/teknokeras/golang-graphql-template/app/modules/core/role"
+import role "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
 
 type User struct{
 	Id 		  int64

@@ -11,31 +11,6 @@ import (
 	"github.com/teknokeras/golang-graphql-template/app/modules"
 )
 
-func initFixtures(db *pg.DB){
-	r := role.Role{Name: os.Getenv("DEFAULT_ADMINISTRATOR_ROLE")}
-
-	err := db.Insert(&r)
-
-	if err != nil{
-		fmt.Println("Cannot create Default Role")
-		panic(err)
-		return
-	}
-
-	u := user.User{
-		Name: os.Getenv("DEFAULT_ADMIN_FULL_NAME"), 
-		Email: os.Getenv("DEFAULT_ADMIN_EMAIL"), 
-		Password: os.Getenv("DEFAULT_ADMIN_PASSWORD"), 
-		UserRole: &r,
-	}
-
-	err = db.Insert(&u)
-
-	if err != nil{
-		fmt.Println("Cannot create Default User")
-		panic(err)
-	}	
-}
 
 func NewDB() *pg.DB{
 
@@ -63,7 +38,7 @@ func NewDB() *pg.DB{
         }
     }
 
-    initFixtures(db)
+    modules.InitFixtures(db)
 
     return db
 

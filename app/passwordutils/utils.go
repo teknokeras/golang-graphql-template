@@ -4,9 +4,9 @@ import (
     "crypto/rand"
     "crypto/subtle"
     "encoding/base64"
-    "errors"
     "fmt"
     "strings"
+    "errors"
 
     "golang.org/x/crypto/argon2"
 )
@@ -19,7 +19,20 @@ type params struct {
     keyLength   uint32
 }
 
-func EncryptPassword(password string, p *params) (encodedHash string, err error) {
+var p = &params{
+    memory:      64 * 1024,
+    iterations:  3,
+    parallelism: 2,
+    saltLength:  16,
+    keyLength:   32,
+}
+
+var (
+    ErrInvalidHash         = errors.New("the encoded hash is not in the correct format")
+    ErrIncompatibleVersion = errors.New("incompatible version of argon2")
+)
+
+func EncryptPassword(password string) (encodedHash string, err error) {
     salt, err := generateRandomBytes(p.saltLength)
     if err != nil {
         return "", err

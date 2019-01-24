@@ -1,4 +1,4 @@
-package role
+package model
 
 type Role struct{
 	Id     int64
