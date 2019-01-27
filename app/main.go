@@ -9,6 +9,7 @@ import (
 	"github.com/graphql-go/graphql"
 
 	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
+	"github.com/teknokeras/golang-graphql-template/db"
 )
 
 func executeQuery(query string, schema graphql.Schema) *graphql.Result {
@@ -23,8 +24,15 @@ func executeQuery(query string, schema graphql.Schema) *graphql.Result {
 }
 
 func main() {
+
+	database := db.NewDB()
+
+    if (database == nil){
+        panic("Cannot create database")
+    }
+
 	http.HandleFunc("/graphql", func(w http.ResponseWriter, r *http.Request) {
-		result := executeQuery(r.URL.Query().Get("query"), appSchema.Schema)
+		result := executeQuery(r.URL.Query().Get("query"), appSchema.GetSchema(database))
 		json.NewEncoder(w).Encode(result)
 	})
 }
