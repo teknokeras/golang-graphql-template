@@ -1,6 +1,132 @@
 package main
 
 import (
+	"os"
+    "fmt"
+    "strings"
+
+    "github.com/go-pg/pg"
+    "github.com/go-pg/pg/orm"
+)
+
+type User struct {
+    Id     int64
+    Name   string
+    Emails []string
+}
+
+func (u User) String() string {
+    return fmt.Sprintf("User<%d %s %v>", u.Id, u.Name, u.Emails)
+}
+
+type Story struct {
+    Id       int64
+    Title    string
+    AuthorId int64
+    Author   *User
+}
+
+func (s Story) String() string {
+    return fmt.Sprintf("Story<%d %s %s>", s.Id, s.Title, s.Author)
+}
+
+func ExampleDB_Model() {
+	var dbHost strings.Builder
+
+	dbHost.WriteString(os.Getenv("POSTGRES_HOST"))
+	dbHost.WriteString(":")
+	dbHost.WriteString(os.Getenv("POSTGRES_DB_PORT"))
+	
+	db := pg.Connect(&pg.Options{
+        User: os.Getenv("POSTGRES_USER"),
+        Password: os.Getenv("POSTGRES_PASSWORD"),
+        Database: os.Getenv("POSTGRES_DB"),
+        Addr: dbHost.String(),
+    })
+
+    defer db.Close()
+
+    err := createSchema(db)
+    if err != nil {
+        panic(err)
+    }
+
+    user1 := &User{
+        Name:   "admin",
+        Emails: []string{"admin1@admin", "admin2@admin"},
+    }
+    err = db.Insert(user1)
+    if err != nil {
+        panic(err)
+    }
+
+    err = db.Insert(&User{
+        Name:   "root",
+        Emails: []string{"root1@root", "root2@root"},
+    })
+    if err != nil {
+        panic(err)
+    }
+
+    story1 := &Story{
+        Title:    "Cool story",
+        AuthorId: user1.Id,
+    }
+    err = db.Insert(story1)
+    if err != nil {
+        panic(err)
+    }
+
+    // Select user by primary key.
+    user := &User{Id: 2000}
+    err = db.Select(user)
+    if err != nil {
+        panic(err)
+    }
+
+    // Select all users.
+    var users []User
+    err = db.Model(&users).Select()
+    if err != nil {
+        panic(err)
+    }
+
+    // Select story and associated author in one query.
+    story := new(Story)
+    err = db.Model(story).
+        Relation("Author").
+        Where("story.id = ?", story1.Id).
+        Select()
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Println(user)
+    fmt.Println(users)
+    fmt.Println(story)
+    // Output: User<1 admin [admin1@admin admin2@admin]>
+    // [User<1 admin [admin1@admin admin2@admin]> User<2 root [root1@root root2@root]>]
+    // Story<1 Cool story User<1 admin [admin1@admin admin2@admin]>>
+}
+
+func createSchema(db *pg.DB) error {
+    for _, model := range []interface{}{(*User)(nil), (*Story)(nil)} {
+        err := db.CreateTable(model, &orm.CreateTableOptions{
+            Temp: true,
+        })
+        if err != nil {
+            return err
+        }
+    }
+    return nil
+}
+
+func main() {
+	ExampleDB_Model()
+}
+
+/*
+import (
 	"encoding/json"
 	//"fmt"
 	"log"
@@ -36,55 +162,4 @@ func main() {
 		json.NewEncoder(w).Encode(result)
 	})
 }
-
-/*
-import (
-	"encoding/json"
-	"fmt"
-	"log"
-
-	"github.com/graphql-go/graphql"
-)
-
-func main() {
-	// Schema
-	fields := graphql.Fields{
-		"hello": &graphql.Field{
-			Type: graphql.String,
-			Args: graphql.FieldConfigArgument{
-                    "first": &graphql.ArgumentConfig{
-                        Type: graphql.Int,
-                    },
-                },
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				if(p.Args["first"] == nil){
-					log.Print("no first")
-				}else{
-					log.Print("first exists")
-					log.Print(p.Args["first"].(int))
-				}
-				return "world", nil
-			},
-		},
-	}
-	rootQuery := graphql.ObjectConfig{Name: "RootQuery", Fields: fields}
-	schemaConfig := graphql.SchemaConfig{Query: graphql.NewObject(rootQuery)}
-	schema, err := graphql.NewSchema(schemaConfig)
-	if err != nil {
-		log.Fatalf("failed to create new schema, error: %v", err)
-	}
-
-	// Query
-	query := `
-		{
-			hello(first: 2)
-		}
-	`
-	params := graphql.Params{Schema: schema, RequestString: query}
-	r := graphql.Do(params)
-	if len(r.Errors) > 0 {
-		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
-	}
-	rJSON, _ := json.Marshal(r)
-	fmt.Printf("%s \n", rJSON) // {“data”:{“hello”:”world”}}
-}*/
+*/

@@ -7,7 +7,7 @@ import (
 
 	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/types"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/query/getroles/args"
+	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/args"
 	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/query/getroles/resolver"
 
 )

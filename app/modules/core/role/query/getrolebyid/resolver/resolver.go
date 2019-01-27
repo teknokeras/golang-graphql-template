@@ -5,32 +5,25 @@ import (
 	
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/query/getroles/args"
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/query/getroles/resolver"
+	"github.com/teknokeras/golang-graphql-template/app/db"
+
+	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/model"
 )
 
+func Resolve(params graphql.ResolveParams, database db.Database) (interface{}, error){
 
-func Resolve(params graphql.ResolveParams) (interface{}, error){
-	 // marshall and cast the argument value
-	text, _ := params.Args["id"].(int)
-
-	// figure out new id
-	newID := RandStringRunes(8)
-
-	// perform mutation operation here
-	// for e.g. create a Todo and save to DB.
-	newTodo := Todo{
-		ID:   newID,
-		Text: text,
-		Done: false,
+	if (params.Args["id"] == nil){
+		return nil, errors.New("'id' argument is mandatory")
 	}
 
-	TodoList = append(TodoList, newTodo)
+	id, _ := params.Args["id"].(int)
 
-	// return the new Todo object that we supposedly save to DB
-	// Note here that
-	// - we are returning a `Todo` struct instance here
-	// - we previously specified the return Type to be `todoType`
-	// - `Todo` struct maps to `todoType`, as defined in `todoType` ObjectConfig`
-	return newTodo, nil
+	r := model.Role{Id: id}
+
+	err := db.Select(&r)
+	if err == nil {
+		return model.Role{}, nil
+	}
+
+	return r, nil
 }
