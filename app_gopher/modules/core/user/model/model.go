@@ -9,3 +9,15 @@ type User struct{
 	Password  string
 	Role      *role.Role
 }
+/*
+import "github.com/jinzhu/gorm"
+
+
+type User struct{
+	gorm.Model
+	Name      string
+	Email     string
+	Password  string
+	RoleID    int
+}
+*/

@@ -1,3 +1,0 @@
-allRoles(first: Int, offset: Int): RoleConnection
-getRoleById(id: ID!): Role
-getRoleByName(name: String!, first: Int, offset: Int): RoleConnection

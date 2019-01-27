@@ -1,0 +1,3 @@
+allRoles(first: Int, after: ID): RoleConnection
+getRoleById(id: ID!): Role
+getRoleByName(name: String!, first: Int, after: ID): RoleConnection

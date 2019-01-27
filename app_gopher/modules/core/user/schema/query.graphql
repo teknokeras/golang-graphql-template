@@ -1,0 +1,6 @@
+allUsers(first: Int, after: ID): [UserConnection]
+getUserById(id: ID!): User
+getUserByName(name: String!, first: Int, after: ID): [UserConnection]
+getUserByEmail(email: String!): User
+getUserByRoleId(role: ID!, first: Int, after: ID): [UserConnection]
+getUserByRoleName(role: String!, first: Int, after: ID): [UserConnection]

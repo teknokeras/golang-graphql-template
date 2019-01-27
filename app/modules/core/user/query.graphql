@@ -1,5 +1,0 @@
-allUsers(first: Int, offset: Int): [UserConnection]
-getUserById(id: ID!): User
-getUserByName(name: String!, first: Int, offset: Int): [UserConnection]
-getUserByEmail(email: String!): User
-getUserByRoleName(role: String!, first: Int, offset: Int): [UserConnection]

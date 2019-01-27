@@ -16,7 +16,13 @@ input UserInput {
 
 type UserConnection {
   totalCount: Int!
-  users: [User]
+  edges: [UserEdge]
+  pageInfo: PageInfo!
+}
+
+type UserEdge {
+  cursor: ID!
+  node: User
 }
 
 type Tokens {
