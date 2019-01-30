@@ -1,23 +1,25 @@
 package getusers
 
-import (
-	"errors"
-	
+import (	
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/types"
+	"github.com/teknokeras/golang-graphql-template/app/typehub"
+	"github.com/teknokeras/golang-graphql-template/app/db"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/args"
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/query/getroles/resolver"
+	argument "github.com/teknokeras/golang-graphql-template/app/modules/core/user/args"
 
 )
 
-var Field = &graphql.Field{
-		Type: types.RoleList, // the return type for this field
+func GetField(database db.Database) *graphql.Field{
+	field := &graphql.Field{
+		Type: typehub.GetUserListType(database), // the return type for this field
 		Description: "Get All Users paginated",
-		Args: args.Arguments,
+		Args: argument.Arguments,
 		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-			item, error := resolver.Resolve(params)
+			item, error := Resolve(params, database)
 			return item, error
 		},
-	}
+	} 
+
+	return field
+}

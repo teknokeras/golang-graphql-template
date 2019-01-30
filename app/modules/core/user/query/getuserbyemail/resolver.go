@@ -1,13 +1,22 @@
-package resolver
+package getuserbyemail
 
+import (
+	"github.com/graphql-go/graphql"
+	"github.com/teknokeras/golang-graphql-template/app/db"
+)
+
+func Resolve(params graphql.ResolveParams, database db.Database) (interface{}, error){
+	return nil, nil
+}
+/*
 import (
 	"errors"
 	
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/query/getroles/args"
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/query/getroles/resolver"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/args"
 )
+
 
 func Resolve(params graphql.ResolveParams) (interface{}, error){
 	 // marshall and cast the argument value
@@ -32,4 +41,4 @@ func Resolve(params graphql.ResolveParams) (interface{}, error){
 	// - we previously specified the return Type to be `todoType`
 	// - `Todo` struct maps to `todoType`, as defined in `todoType` ObjectConfig`
 	return newTodo, nil
-}
+}*/

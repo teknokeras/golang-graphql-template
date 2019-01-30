@@ -5,17 +5,16 @@ import (
 	"strings"
 
     "github.com/go-pg/pg"
-    "github.com/go-pg/pg/orm"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules"
 )
 
-// DB is the DB that will performs all operation
-type Database struct {
-	Engine *pg.DB
+var Engine *pg.DB
+
+func init() {
+    Engine = newDB()
 }
 
-func NewDB() *Database{
+func newDB() *pg.DB{
 
 	var dbHost strings.Builder
 
@@ -30,17 +29,6 @@ func NewDB() *Database{
         Addr: dbHost.String(),
     })
 
-    for _, model := range modules.ModelList {
-        err := db.CreateTable(model, &orm.CreateTableOptions{
-            IfNotExists: true,
-        })
-        if err != nil {
-            return nil
-        }
-    }
-
-    modules.InitFixtures(db)
-
-	return &Database{db}
+	return db
 
 }

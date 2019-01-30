@@ -1,4 +1,4 @@
-package modules
+package graphqltypes
 
 import "github.com/graphql-go/graphql"
 
@@ -13,14 +13,6 @@ var PageInfoType = graphql.NewObject(graphql.ObjectConfig{
 		"hasPreviousPage": &graphql.Field{
 			Type:        graphql.NewNonNull(graphql.Boolean),
 			Description: "When paginating backwards, are there more items?",
-		},
-		"startCursor": &graphql.Field{
-			Type:        graphql.String,
-			Description: "When paginating backwards, the cursor to continue.",
-		},
-		"endCursor": &graphql.Field{
-			Type:        graphql.String,
-			Description: "When paginating forwards, the cursor to continue.",
 		},
 	},
 })

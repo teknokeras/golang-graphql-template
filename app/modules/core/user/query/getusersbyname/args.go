@@ -1,8 +1,8 @@
-package args
+package getusersbyname
 
 import (
 	"github.com/graphql-go/graphql"
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/user/types"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/types"
 )
 
 var Arguments = graphql.FieldConfigArgument{

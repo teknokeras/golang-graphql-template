@@ -4,9 +4,10 @@ import (
 	"os"
 	"fmt"
     
-    "github.com/go-pg/pg"
+    "github.com/go-pg/pg/orm"
 
 	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
+	"github.com/teknokeras/golang-graphql-template/app/db"
 
 	role "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
 	user "github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
@@ -14,7 +15,17 @@ import (
 
 var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}
 
-func InitFixtures(db *pg.DB){
+
+func InitTablesAndFixtures(){
+
+	for _, model := range ModelList {
+        err := db.Engine.CreateTable(model, &orm.CreateTableOptions{
+            IfNotExists: true,
+        })
+        if err != nil {
+        	panic("Cannot create tables")
+        }
+    }
 
 	roleDoesntExists := true
 	userDoesntExists := true
@@ -22,15 +33,13 @@ func InitFixtures(db *pg.DB){
 	r := role.Role{Name: os.Getenv("DEFAULT_ADMINISTRATOR_ROLE")}
 
 
-	err := db.Select(&r)
+	err := db.Engine.Select(&r)
 	if err == nil {
 		roleDoesntExists = false
     }
 
-    fmt.Println(r)
-
     var users []user.User
-    err = db.Model(&users).Select()
+    err = db.Engine.Model(&users).Select()
     if err != nil {
         fmt.Println("we have a panic")
     }
@@ -39,12 +48,10 @@ func InitFixtures(db *pg.DB){
     	userDoesntExists = false
     }
 
-    fmt.Println(users)
-
     if(roleDoesntExists) && (userDoesntExists){
     	fmt.Println("Create fixture")
 
-    	err := db.Insert(&r)
+    	err := db.Engine.Insert(&r)
 
 		if err != nil{
 			fmt.Println("Cannot create Default Role")
@@ -62,10 +69,10 @@ func InitFixtures(db *pg.DB){
 			Name: os.Getenv("DEFAULT_ADMIN_FULL_NAME"), 
 			Email: os.Getenv("DEFAULT_ADMIN_EMAIL"), 
 			Password: encryptedPassword, 
-			Role: &r,
+			RoleId: r.Id,
 		}
 
-		err = db.Insert(&u)
+		err = db.Engine.Insert(&u)
 
 		if err != nil{
 			fmt.Println("Cannot create Default User")
@@ -73,3 +80,5 @@ func InitFixtures(db *pg.DB){
 		}
     }
 }
+
+//add the circular dependencies here

@@ -1,8 +1,10 @@
 package schema
-
+/*
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/teknokeras/golang-graphql-template/app/db"
+
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/mutation/createrole"
 )
 
 func RootMutation(database db.Database) graphql.NewObject {
@@ -20,3 +22,4 @@ func RootMutation(database db.Database) graphql.NewObject {
 	return rootMutation
 }
 
+*/

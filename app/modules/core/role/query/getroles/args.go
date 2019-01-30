@@ -1,4 +1,4 @@
-package args
+package getroles
 
 import "github.com/graphql-go/graphql"
 
@@ -10,3 +10,4 @@ var Arguments = graphql.FieldConfigArgument{
         Type: graphql.Int,
     },
 }
+

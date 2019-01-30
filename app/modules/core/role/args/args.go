@@ -3,7 +3,7 @@ package args
 import (
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/code/role/types"
+	types "github.com/teknokeras/golang-graphql-template/app/modules/core/role/types"
 )
 
 var Arguments = graphql.FieldConfigArgument{

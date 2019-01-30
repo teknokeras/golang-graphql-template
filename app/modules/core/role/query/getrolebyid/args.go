@@ -1,4 +1,4 @@
-package args
+package getrolebyid
 
 import "github.com/graphql-go/graphql"
 
