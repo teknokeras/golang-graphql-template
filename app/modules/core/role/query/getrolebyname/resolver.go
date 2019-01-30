@@ -2,7 +2,7 @@ package getrolebyname
 
 import (
 	"errors"
-	
+
 	"github.com/graphql-go/graphql"
 
 	"github.com/teknokeras/golang-graphql-template/app/db"
@@ -10,7 +10,7 @@ import (
 	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
 )
 
-func Resolve(params graphql.ResolveParams, database *db.Database) (interface{}, error){
+func Resolve(params graphql.ResolveParams) (interface{}, error){
 
 	if (params.Args["name"] == nil){
 		return nil, errors.New("role input argument is mandatory")
@@ -18,10 +18,10 @@ func Resolve(params graphql.ResolveParams, database *db.Database) (interface{}, 
 
 	name, _ := params.Args["name"].(string)
 
-	r := model.Role{Name: name}
+	r := new(model.Role)
 
-	err := database.Engine.Select(&r)
-	if err == nil {
+	err := db.Engine.Model(r).Where("name=?", name).Select()
+	if err != nil {
 		return nil, errors.New("Cannot get role from DB")
     }
 
