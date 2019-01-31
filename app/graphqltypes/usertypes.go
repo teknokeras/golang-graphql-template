@@ -30,6 +30,9 @@ var UserInputType = graphql.NewInputObject(
     graphql.InputObjectConfig{
         Name: "UserInputType",
         Fields: graphql.InputObjectConfigFieldMap{
+            "id": &graphql.InputObjectFieldConfig{
+                Type: graphql.Int,
+            },
             "name": &graphql.InputObjectFieldConfig{
                 Type: graphql.String,
             },
@@ -38,6 +41,9 @@ var UserInputType = graphql.NewInputObject(
             },
             "password": &graphql.InputObjectFieldConfig{
                 Type: graphql.String,
+            },
+            "roleId": &graphql.InputObjectFieldConfig{
+                Type: graphql.Int,
             },
         },
     },

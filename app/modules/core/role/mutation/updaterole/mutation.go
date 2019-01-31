@@ -10,7 +10,7 @@ import (
 
 var Field = &graphql.Field{
 			Type: graphqltypes.RoleType,
-			Description: "Create new Role",
+			Description: "Update Role",
 			Args: graphql.FieldConfigArgument{
 				"role": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphqltypes.RoleInputType),

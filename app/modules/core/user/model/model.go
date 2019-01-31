@@ -3,6 +3,7 @@ package model
 import (
 	"errors"
 	
+	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
 	"github.com/teknokeras/golang-graphql-template/app/graphqlutils"
 	"github.com/teknokeras/golang-graphql-template/app/db"
 )
@@ -94,4 +95,55 @@ func GetPrevNextExistence(users []User) (bool, bool){
 	nextCount, _ := db.Engine.Model((*User)(nil)).Where("id > ?", user.Id).Order("id ASC").Count()
 
 	return prevCount > 0, nextCount > 0
+}
+
+func CreateUser(name string, email string, password string, roleId int) (User, error){
+
+	if u, err := GetUserByEmail(email); err == nil{
+		//user already exists 
+		return User{}, errors.New("User already exists")
+	}else{
+		if hashedPassword, errEnc := passwordutils.EncryptPassword(password); errEnc != nil {
+			return User{}, errors.New("Cannot hash password")
+		}else{
+			u = User{Name: name, Email: email, Password: hashedPassword, RoleId: int64(roleId)}
+
+			if err = db.Engine.Insert(&u); err != nil{
+				return User{}, err
+			}
+			return u, nil
+		}
+	}
+}
+
+func UpdateUser(user User) (User, error){
+	r := User{Id: user.Id}
+
+	if err := db.Engine.Select(&r); err != nil{
+		return User{}, err
+	}else{
+		r.Name = user.Name
+		r.Email = user.Email
+		r.RoleId = user.RoleId
+
+		if err = db.Engine.Update(&r); err != nil{
+			return User{}, err
+		}else{
+			return r, nil
+		}
+	}
+}
+
+func DeleteUser(id int) (error) {
+	r := User{Id: int64(id)}
+
+	if err := db.Engine.Select(&r); err != nil{
+		return errors.New("User Does not Exists")
+	}else{
+		if err = db.Engine.Delete(&r); err != nil{
+			return errors.New("User Cannot be deleted")
+		}else{
+			return nil
+		}
+	}
 }

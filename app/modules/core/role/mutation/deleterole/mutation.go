@@ -8,7 +8,7 @@ import (
 
 var Field = &graphql.Field{
 			Type: graphql.String,
-			Description: "Create new Role",
+			Description: "Delete Role",
 			Args: graphql.FieldConfigArgument{
 				"id": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.Int),
