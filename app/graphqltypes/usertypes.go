@@ -28,7 +28,7 @@ var UserType = graphql.NewObject(graphql.ObjectConfig{
 
 var UserInputType = graphql.NewInputObject(
     graphql.InputObjectConfig{
-        Name: "User Input Type",
+        Name: "UserInputType",
         Fields: graphql.InputObjectConfigFieldMap{
             "name": &graphql.InputObjectFieldConfig{
                 Type: graphql.String,
@@ -64,7 +64,7 @@ var roleField = &graphql.Field{
         }
 
 var UserListType = graphql.NewObject(graphql.ObjectConfig{
-        Name: "User List",
+        Name: "UserList",
         Fields: graphql.Fields{
             "users": &graphql.Field{
                 Type:        graphql.NewList(UserType),

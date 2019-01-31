@@ -28,6 +28,9 @@ var RoleInputType = graphql.NewInputObject(
     graphql.InputObjectConfig{
         Name: "RoleInputType",
         Fields: graphql.InputObjectConfigFieldMap{
+            "id": &graphql.InputObjectFieldConfig{
+                Type: graphql.Int,
+            },
             "name": &graphql.InputObjectFieldConfig{
                 Type: graphql.String,
             },

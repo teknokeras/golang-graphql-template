@@ -1,17 +1,35 @@
 package main
 
 import (
-	"encoding/json"
+//	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/graphql-go/graphql"
+//	"github.com/graphql-go/graphql"
+	"github.com/graphql-go/handler"
 
 	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
 	"github.com/teknokeras/golang-graphql-template/app/modules"
 )
 
+func main() {
+	modules.InitTablesAndFixtures()
 
+    schema := appSchema.Schema
+
+	h := handler.New(&handler.Config{
+		Schema: &schema,
+		Pretty: true,
+		GraphiQL: true,
+	})
+
+	http.Handle("/graphql", h)
+	fmt.Println("Now server is running on port 5000")
+	fmt.Println("Test with Get      : curl -g 'http://localhost:5000/graphql?query={Roles(first:1,after:2)}'")
+	http.ListenAndServe("0.0.0.0:5000", nil)
+}
+
+/*
 func executeQuery(query string, schema graphql.Schema) *graphql.Result {
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
@@ -41,4 +59,4 @@ func main() {
 }
 
 
-
+*/
