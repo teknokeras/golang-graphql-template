@@ -1,11 +1,25 @@
 version: '3.6'
-
 services:
+  db:
+    restart: unless-stopped
+    image: postgres
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
   api:
     image: webapp-go
     build: .
+    env_file:
+      - .env
     volumes:
       - ./app:/app
     ports:
       - 5000:5000
+    depends_on:
+      - db
     tty: true
+volumes:
+  db_data:
