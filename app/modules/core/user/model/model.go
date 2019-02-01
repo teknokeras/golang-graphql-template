@@ -147,3 +147,22 @@ func DeleteUser(id int) (error) {
 		}
 	}
 }
+
+func VerifyPassword(email string, password string) bool {
+	
+	if u, err := GetUserByEmail(email); err != nil{
+		//user already exists 
+		return false
+	}else{
+		//user exists
+		if match, err := passwordutils.ComparePasswordAndHash(password, u.Password); err != nil {
+			return false
+		} else {
+			if match {
+				return true
+			}else{
+				return false
+			}
+		}
+	}
+}

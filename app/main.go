@@ -1,62 +1,39 @@
 package main
 
 import (
-//	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
-//	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 
 	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
+	authSchema "github.com/teknokeras/golang-graphql-template/app/auth/schema"
+	auth "github.com/teknokeras/golang-graphql-template/app/auth"
 	"github.com/teknokeras/golang-graphql-template/app/modules"
 )
 
 func main() {
 	modules.InitTablesAndFixtures()
 
-    schema := appSchema.Schema
-
 	h := handler.New(&handler.Config{
-		Schema: &schema,
+		Schema: &appSchema.Schema,
 		Pretty: true,
 		GraphiQL: true,
 	})
-
-	http.Handle("/graphql", h)
-	fmt.Println("Now server is running on port 5000")
-	fmt.Println("Test with Get      : curl -g 'http://localhost:5000/graphql?query={Roles(first:1,after:2)}'")
-	http.ListenAndServe("0.0.0.0:5000", nil)
-}
-
-/*
-func executeQuery(query string, schema graphql.Schema) *graphql.Result {
-	result := graphql.Do(graphql.Params{
-		Schema:        schema,
-		RequestString: query,
+	authHandler := handler.New(&handler.Config{
+		Schema: &authSchema.Schema,
+		Pretty: true,
+		GraphiQL: true,
 	})
-	if len(result.Errors) > 0 {
-		fmt.Printf("wrong result, unexpected errors: %v", result.Errors)
-	}
-	return result
-}
-
-func main() {
-
-	modules.InitTablesAndFixtures()
-
-    schema := appSchema.Schema
-
-    http.HandleFunc("/graphql", func(w http.ResponseWriter, r *http.Request) {
-		result := executeQuery(r.URL.Query().Get("query"), schema)
-		json.NewEncoder(w).Encode(result)
-	})
-
+	
+	http.Handle("/auth", authHandler)
+	http.Handle("/graphql", auth.IsAuthorized(h))
+		
 	fmt.Println("Now server is running on port 5000")
+	fmt.Println("Login on      : curl -g 'http://localhost:5000/auth?mutation={Login(email:\"fsdfdf\",password:\"sdfdf\")}'")
 	fmt.Println("Test with Get      : curl -g 'http://localhost:5000/graphql?query={Roles(first:1,after:2)}'")
-	http.ListenAndServe("0.0.0.0:5000", nil)
 
+
+	log.Fatal(http.ListenAndServe("0.0.0.0:5000", nil))
 }
-
-
-*/

@@ -2,6 +2,8 @@ module github.com/teknokeras/golang-graphql-template/app
 
 replace github.com/teknokeras/golang-graphql-template/app/schema => ./schema
 
+replace github.com/teknokeras/golang-graphql-template/app/auth => ./auth
+
 replace github.com/teknokeras/golang-graphql-template/app/modules => ./modules
 
 replace github.com/teknokeras/golang-graphql-template/app/db => ./db
@@ -13,6 +15,7 @@ replace github.com/teknokeras/golang-graphql-template/app/passwordutils => ./pas
 replace github.com/teknokeras/golang-graphql-template/app/typehub => ./typehub
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-pg/pg v7.1.7+incompatible
 	github.com/graph-gophers/graphql-go v0.0.0-20190108123631-d5b7dc6be53b
 	github.com/graphql-go/graphql v0.7.7
