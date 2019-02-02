@@ -2,9 +2,5 @@ language: go
 go:
   - "1.11"
 
-#before_script:
-#   - go get github.com/cespare/reflex
-
 script:
-  - cd app/
-  - go test
+  - cat /etc/os-release
