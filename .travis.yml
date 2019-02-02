@@ -1,6 +1,7 @@
 language: go
-go:
-  - "1.11"
+
+before_install:
+  - cat /etc/os-release
 
 script:
   - cat /etc/os-release
