@@ -3,7 +3,7 @@ package deleterole
 import (
 	"github.com/graphql-go/graphql"
 
-	"app/modules/core/role/model"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
 )
 
 var Field = &graphql.Field{

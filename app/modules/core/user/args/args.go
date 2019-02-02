@@ -2,7 +2,7 @@ package args
 
 import (
 	"github.com/graphql-go/graphql"
-	"app/modules/core/user/types"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/types"
 )
 
 var Arguments = graphql.FieldConfigArgument{

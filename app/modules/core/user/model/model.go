@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 	
-	"app/passwordutils"
-	"app/graphqlutils"
-	"app/db"
+	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
+	"github.com/teknokeras/golang-graphql-template/app/graphqlutils"
+	"github.com/teknokeras/golang-graphql-template/app/db"
 )
 
 type User struct{

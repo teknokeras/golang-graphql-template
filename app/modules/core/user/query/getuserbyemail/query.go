@@ -5,9 +5,9 @@ import (
 
 	"github.com/graphql-go/graphql"
 
-	"app/graphqltypes"
+	"github.com/teknokeras/golang-graphql-template/app/graphqltypes"
 
-	"app/modules/core/user/model"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
 
 )
 

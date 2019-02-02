@@ -7,10 +7,10 @@ import (
 
 	"github.com/graphql-go/handler"
 
-	appSchema "app/schema"
-	authSchema "app/auth/schema"
-	auth "app/auth"
-	"app/modules"
+	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
+	authSchema "github.com/teknokeras/golang-graphql-template/app/auth/schema"
+	auth "github.com/teknokeras/golang-graphql-template/app/auth"
+	"github.com/teknokeras/golang-graphql-template/app/modules"
 )
 
 func main() {

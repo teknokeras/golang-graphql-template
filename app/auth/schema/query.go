@@ -3,7 +3,7 @@ package schema
 import (
 	"github.com/graphql-go/graphql"
 	
-	"app/modules/core/user/query/login"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/login"
 )
 
 var AuthQuery = graphql.NewObject(graphql.ObjectConfig{

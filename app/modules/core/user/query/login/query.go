@@ -5,9 +5,9 @@ import (
 
 	"github.com/graphql-go/graphql"
 
-	"app/passwordutils"
+	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
 
-	"app/modules/core/user/model"
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
 )
 
 var Field = &graphql.Field{

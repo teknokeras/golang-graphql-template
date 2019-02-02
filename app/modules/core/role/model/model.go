@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 
-	"app/db"
-	"app/graphqlutils"
-	user "app/modules/core/user/model"
+	"github.com/teknokeras/golang-graphql-template/app/db"
+	"github.com/teknokeras/golang-graphql-template/app/graphqlutils"
+	user "github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
 )
 
 type Role struct{

@@ -6,11 +6,11 @@ import (
     
     "github.com/go-pg/pg/orm"
 
-	"app/passwordutils"
-	"app/db"
+	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
+	"github.com/teknokeras/golang-graphql-template/app/db"
 
-	role "app/modules/core/role/model"
-	user "app/modules/core/user/model"
+	role "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
+	user "github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
 )
 
 var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}

@@ -5,10 +5,10 @@ import (
 
     "github.com/graphql-go/graphql"
     
-    "app/db"
+    "github.com/teknokeras/golang-graphql-template/app/db"
 
-    userModel "app/modules/core/user/model"
-    roleModel "app/modules/core/role/model"
+    userModel "github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
+    roleModel "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
 )
 
 var UserType = graphql.NewObject(graphql.ObjectConfig{
