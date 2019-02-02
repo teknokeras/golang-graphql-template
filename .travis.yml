@@ -2,8 +2,8 @@ language: go
 go:
   - "1.11"
 
-before_script:
-  - go get github.com/cespare/reflex
+#before_script:
+#   - go get github.com/cespare/reflex
 
 script:
   - cd app/
