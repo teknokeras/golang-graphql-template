@@ -13,3 +13,4 @@ before_install:
 
 script:
   - sudo docker run hello-world
+  - cd app/
