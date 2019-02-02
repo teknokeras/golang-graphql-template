@@ -5,9 +5,9 @@ import (
 
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/graphqltypes"
-	roleModel "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
+	"app/graphqltypes"
+	roleModel "app/modules/core/role/model"
+	"app/modules/core/user/model"
 )
 
 var Field = &graphql.Field{

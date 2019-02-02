@@ -3,15 +3,15 @@ package schema
 import (
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/query/getroles"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/query/getrolebyid"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/query/getrolebyname"
+	"app/modules/core/role/query/getroles"
+	"app/modules/core/role/query/getrolebyid"
+	"app/modules/core/role/query/getrolebyname"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getuserbyemail"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getuserbyid"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusers"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusersbyname"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusersbyrole"
+	"app/modules/core/user/query/getuserbyemail"
+	"app/modules/core/user/query/getuserbyid"
+	"app/modules/core/user/query/getusers"
+	"app/modules/core/user/query/getusersbyname"
+	"app/modules/core/user/query/getusersbyrole"
 )
 
 var RootQuery = graphql.NewObject(graphql.ObjectConfig{

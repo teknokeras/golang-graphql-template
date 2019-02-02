@@ -5,10 +5,10 @@ import (
 
 	"github.com/graphql-go/graphql"
 
-	"github.com/teknokeras/golang-graphql-template/app/graphqlutils"
-	"github.com/teknokeras/golang-graphql-template/app/graphqltypes"
+	"app/graphqlutils"
+	"app/graphqltypes"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
+	"app/modules/core/user/model"
 )
 
 var Field = &graphql.Field{

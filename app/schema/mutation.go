@@ -3,13 +3,13 @@ package schema
 import (
 	"github.com/graphql-go/graphql"
 	
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/mutation/createrole"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/mutation/updaterole"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/role/mutation/deleterole"
+	"app/modules/core/role/mutation/createrole"
+	"app/modules/core/role/mutation/updaterole"
+	"app/modules/core/role/mutation/deleterole"
 
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/mutation/createuser"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/mutation/updateuser"
-	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/mutation/deleteuser"
+	"app/modules/core/user/mutation/createuser"
+	"app/modules/core/user/mutation/updateuser"
+	"app/modules/core/user/mutation/deleteuser"
 )
 
 var RootMutation = graphql.NewObject(graphql.ObjectConfig{
