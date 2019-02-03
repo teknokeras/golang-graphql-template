@@ -12,6 +12,9 @@ import (
 	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusers"
 	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusersbyname"
 	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/getusersbyrole"
+
+	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/query/login"
+
 )
 
 var RootQuery = graphql.NewObject(graphql.ObjectConfig{
@@ -25,5 +28,6 @@ var RootQuery = graphql.NewObject(graphql.ObjectConfig{
 		"GetUsers": getusers.Field,
 		"GetUsersByName": getusersbyname.Field,
 		"GetUsersByRole": getusersbyrole.Field,
+		"Login": login.Field,
 	},
 })	

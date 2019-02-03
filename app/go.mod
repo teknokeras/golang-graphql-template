@@ -20,6 +20,7 @@ require (
 	github.com/graph-gophers/graphql-go v0.0.0-20190108123631-d5b7dc6be53b
 	github.com/graphql-go/graphql v0.7.7
 	github.com/graphql-go/handler v0.2.3
+	github.com/jinzhu/copier v0.0.0-20180308034124-7e38e58719c3
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/opentracing/opentracing-go v1.0.2 // indirect
 	github.com/pkg/errors v0.8.1
