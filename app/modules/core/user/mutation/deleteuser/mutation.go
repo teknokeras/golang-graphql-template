@@ -7,20 +7,20 @@ import (
 )
 
 var Field = &graphql.Field{
-			Type: graphql.String,
-			Description: "Delete User",
-			Args: graphql.FieldConfigArgument{
-				"id": &graphql.ArgumentConfig{
-					Type: graphql.NewNonNull(graphql.Int),
-				},
-			},
+	Type:        graphql.String,
+	Description: "Delete User",
+	Args: graphql.FieldConfigArgument{
+		"id": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.Int),
+		},
+	},
 
-			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+	Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 
-				if err := model.DeleteUser(params.Args["id"].(int)); err != nil {
-					return nil, err
-				}else{
-					return "User is Deleted", nil
-				}
-			},
+		if err := model.DeleteUser(params.Args["id"].(int)); err != nil {
+			return nil, err
+		} else {
+			return "User is Deleted", nil
 		}
+	},
+}

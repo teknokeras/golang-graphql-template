@@ -4,9 +4,9 @@ import (
     "crypto/rand"
     "crypto/subtle"
     "encoding/base64"
+    "errors"
     "fmt"
     "strings"
-    "errors"
 
     "golang.org/x/crypto/argon2"
 )

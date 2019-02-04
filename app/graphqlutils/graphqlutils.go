@@ -1,10 +1,10 @@
 package graphqlutils
 
 import (
+	"encoding/base64"
 	"fmt"
 	"strconv"
 	"strings"
-	"encoding/base64"
 
 	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/pkg/errors"

@@ -1,10 +1,10 @@
 package passwordutils
 
 import (
-	"os"
-	"time"
 	"errors"
 	"log"
+	"os"
+	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -13,15 +13,15 @@ var signingKey = []byte(os.Getenv("DEFAULT_JWT_SIGNING_KEY"))
 
 func GenerateJwtToken(email string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-	    "authorized": true,
-	    "client": email,
-	    "exp": time.Now().Add(time.Minute * 30).Unix(),
+		"authorized": true,
+		"client":     email,
+		"exp":        time.Now().Add(time.Minute * 30).Unix(),
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
 	if tokenString, err := token.SignedString(signingKey); err != nil {
 		return "", err
-	}else{
+	} else {
 		return tokenString, nil
 	}
 }
@@ -45,4 +45,3 @@ func ValidateJwtToken(tokenString string) (bool, error) {
 		return false, nil
 	}
 }
-

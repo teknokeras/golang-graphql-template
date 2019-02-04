@@ -10,23 +10,23 @@ import (
 )
 
 var Field = &graphql.Field{
-	Type: graphqltypes.RoleType,
+	Type:        graphqltypes.RoleType,
 	Description: "Get Role By ID",
 	Args: graphql.FieldConfigArgument{
-	    "id": &graphql.ArgumentConfig{
-	        Type: graphql.Int,
-	    },
+		"id": &graphql.ArgumentConfig{
+			Type: graphql.Int,
+		},
 	},
 	Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-		if (params.Args["id"] == nil){
+		if params.Args["id"] == nil {
 			return nil, errors.New("'id' argument is mandatory")
 		}
 
-		if r, err := model.GetRoleById(params.Args["id"].(int)); err != nil{
+		if r, err := model.GetRoleById(params.Args["id"].(int)); err != nil {
 			return nil, errors.New("Role Not Found")
-	    }else{
+		} else {
 			return r, nil
-	    }
+		}
 
 	},
-} 
+}

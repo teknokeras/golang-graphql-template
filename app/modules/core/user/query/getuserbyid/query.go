@@ -8,26 +8,25 @@ import (
 	"github.com/teknokeras/golang-graphql-template/app/graphqltypes"
 
 	"github.com/teknokeras/golang-graphql-template/app/modules/core/user/model"
-
 )
 
-var	Field = &graphql.Field{
-	Type: graphqltypes.UserType, // the return type for this field
+var Field = &graphql.Field{
+	Type:        graphqltypes.UserType, // the return type for this field
 	Description: "Get User By ID",
 	Args: graphql.FieldConfigArgument{
-	    "id": &graphql.ArgumentConfig{
-	        Type: graphql.Int,
-	    },
+		"id": &graphql.ArgumentConfig{
+			Type: graphql.Int,
+		},
 	},
 	Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-		if (params.Args["id"] == nil){
+		if params.Args["id"] == nil {
 			return nil, errors.New("ID argument is mandatory")
 		}
 
-		if r, err := model.GetUserById(params.Args["id"].(int)); err!=nil{
+		if r, err := model.GetUserById(params.Args["id"].(int)); err != nil {
 			return nil, errors.New("Such user doesn't exists")
-		}else{
+		} else {
 			return r, nil
 		}
 	},
-} 
+}
