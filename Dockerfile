@@ -8,6 +8,8 @@ COPY reflex.conf /
 
 WORKDIR $APP
 
+#linter
+RUN go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
 #ENTRYPOINT ["reflex", "-c", "/reflex.conf"]
 

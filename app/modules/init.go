@@ -54,7 +54,6 @@ func InitTablesAndFixtures() {
 		if err != nil {
 			fmt.Println("Cannot create Default Role")
 			panic(err)
-			return
 		}
 
 		encryptedPassword, errEnc := passwordutils.EncryptPassword(os.Getenv("DEFAULT_ADMIN_PASSWORD"))

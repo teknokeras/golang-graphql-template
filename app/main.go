@@ -20,13 +20,7 @@ func main() {
 		Pretty:   true,
 		GraphiQL: true,
 	})
-	authHandler := handler.New(&handler.Config{
-		Schema:   &authSchema.Schema,
-		Pretty:   true,
-		GraphiQL: true,
-	})
 
-	http.Handle("/auth", authHandler)
 	http.Handle("/graphql", auth.IsAuthorized(h))
 
 	fmt.Println("Now server is running on port 5000")

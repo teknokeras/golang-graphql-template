@@ -19,7 +19,9 @@ func getToken(r *http.Request) (string, error) {
 
 	auth := strings.SplitN(r.Header.Get("Authorization"), " ", 2)
 
-	if len(auth) == 2 && (auth[0] != "Bearer" || auth[0] != "bearer") {
+	firstWord := strings.ToLower(auth[0])
+
+	if len(auth) == 2 && firstWord == "bearer" {
 		return auth[1], nil
 	} else {
 		return "", errors.New("Authorization header does not contain correct token format. Format should be 'bearer <JWT Token>'")
@@ -30,34 +32,31 @@ func isAuthRequired(r *http.Request) bool {
 
 	if buf, err := ioutil.ReadAll(r.Body); err != nil {
 		return true
+	} else {
+		rdrAuth := ioutil.NopCloser(bytes.NewBuffer(buf))
+		rdrTemp := ioutil.NopCloser(bytes.NewBuffer(buf))
+
+		r.Body = rdrAuth
+
+		reqOptions := handler.NewRequestOptions(r)
+
+		queryString := strings.Split(reqOptions.Query, "{")
+
+		isQuery := (strings.TrimSpace(queryString[0]) == "Query") || (strings.TrimSpace(queryString[0]) == "query")
+
+		if !isQuery {
+			//mutation must have auth header
+			return true
+		}
+
+		secondQueryString := strings.TrimSpace(queryString[1])
+		isLogin := strings.HasPrefix(secondQueryString, "Login")
+
+		r.Body = rdrTemp
+
+		return !isLogin
+
 	}
-
-	rdrAuth := ioutil.NopCloser(bytes.NewBuffer(buf))
-	rdrTemp := ioutil.NopCloser(bytes.NewBuffer(buf))
-
-	r.Body = rdrAuth
-
-	reqOptions := handler.NewRequestOptions(r)
-
-	queryString := strings.Split(reqOptions.Query, "{")
-
-	isQuery := (strings.TrimSpace(queryString[0]) == "Query") || (strings.TrimSpace(queryString[0]) == "query")
-
-	if !isQuery {
-		//mutation must have auth header
-		return true
-	}
-
-	secondQueryString := strings.TrimSpace(queryString[1])
-	isLogin := strings.HasPrefix(secondQueryString, "Login")
-
-	r.Body = rdrTemp
-
-	if isLogin {
-		return false
-	}
-
-	return true
 }
 
 func IsAuthorized(next http.Handler) http.Handler {
