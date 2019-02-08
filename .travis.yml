@@ -13,4 +13,4 @@ before_script:
 
 script:
   - cd app/
-  - go test -v
+  - ./run-test.sh
