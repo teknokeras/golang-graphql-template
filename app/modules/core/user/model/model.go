@@ -74,7 +74,8 @@ func GetUsersByNamePaginated(first int, after int, name string) ([]User, error) 
 
 func GetUsersByRolePaginated(first int, after int, roleId int) ([]User, error) {
 	var users []User
-	err := db.Engine.Model(&users).Where("roleId=?", roleId).Where("id>?", after).Limit(first).Order("id ASC").Select()
+
+	err := db.Engine.Model(&users).Where("role_id=?", roleId).Where("id>?", after).Limit(first).Order("id ASC").Select()
 
 	if err != nil {
 		return users, errors.New("Users Not Found")

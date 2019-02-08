@@ -55,7 +55,6 @@ func isAuthRequired(r *http.Request) bool {
 		r.Body = rdrTemp
 
 		return !isLogin
-
 	}
 }
 
@@ -64,25 +63,25 @@ func IsAuthorized(next http.Handler) http.Handler {
 
 		if !isAuthRequired(r) {
 			next.ServeHTTP(w, r)
-			return
-		}
+		} else {
+			if tokenString, err := getToken(r); err != nil {
+				fmt.Fprintf(w, err.Error())
+			} else {
+				token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+					if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+						return nil, fmt.Errorf("There was an error")
+					}
+					return signingKey, nil
+				})
 
-		tokenString, _ := getToken(r)
+				if err != nil {
+					fmt.Fprintf(w, err.Error())
+				}
 
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, fmt.Errorf("There was an error")
+				if token.Valid {
+					next.ServeHTTP(w, r)
+				}
 			}
-			return signingKey, nil
-		})
-
-		if err != nil {
-			fmt.Fprintf(w, err.Error())
 		}
-
-		if token.Valid {
-			next.ServeHTTP(w, r)
-		}
-
 	})
 }

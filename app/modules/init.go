@@ -15,7 +15,7 @@ import (
 
 var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}
 
-func InitTablesAndFixtures() {
+func init() {
 
 	for _, model := range ModelList {
 		err := db.Engine.CreateTable(model, &orm.CreateTableOptions{

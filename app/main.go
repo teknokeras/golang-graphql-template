@@ -8,12 +8,11 @@ import (
 	"github.com/graphql-go/handler"
 
 	auth "github.com/teknokeras/golang-graphql-template/app/auth"
-	"github.com/teknokeras/golang-graphql-template/app/modules"
+	_ "github.com/teknokeras/golang-graphql-template/app/modules"
 	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
 )
 
 func main() {
-	modules.InitTablesAndFixtures()
 
 	h := handler.New(&handler.Config{
 		Schema:   &appSchema.Schema,
