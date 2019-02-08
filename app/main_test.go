@@ -12,7 +12,7 @@ func TestLoginPass(t *testing.T) {
 
 	query := `
 		{
-			Login(email:"root@flask.com", password:"flaskiscool")
+			Login(email:"root@golang.com", password:"golangiscool")
 		}
 	`
 
