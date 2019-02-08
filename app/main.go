@@ -8,6 +8,7 @@ import (
 	"github.com/graphql-go/handler"
 
 	auth "github.com/teknokeras/golang-graphql-template/app/auth"
+	_ "github.com/teknokeras/golang-graphql-template/app/db"
 	_ "github.com/teknokeras/golang-graphql-template/app/modules"
 	appSchema "github.com/teknokeras/golang-graphql-template/app/schema"
 )

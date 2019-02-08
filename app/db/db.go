@@ -9,7 +9,7 @@ import (
 
 var Engine *pg.DB
 
-func Init() {
+func init() {
 	Engine = newDB()
 }
 

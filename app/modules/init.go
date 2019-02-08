@@ -17,8 +17,6 @@ var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}
 
 func init() {
 
-	db.Init()
-
 	for _, model := range ModelList {
 		err := db.Engine.CreateTable(model, &orm.CreateTableOptions{
 			IfNotExists: true,

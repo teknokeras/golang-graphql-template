@@ -11,9 +11,6 @@ env:
 before_script:
   - psql -c 'create database golangdb;' -U postgres
 
-before_script:
-  - go get github.com/cespare/reflex
-
 script:
   - cd app/
   - go test
