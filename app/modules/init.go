@@ -17,12 +17,14 @@ var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}
 
 func init() {
 
+	db.init()
+
 	for _, model := range ModelList {
 		err := db.Engine.CreateTable(model, &orm.CreateTableOptions{
 			IfNotExists: true,
 		})
 		if err != nil {
-			panic("Cannot create tables")
+			panic(err)
 		}
 	}
 
