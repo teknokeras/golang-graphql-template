@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-pg/pg/orm"
 
-	"github.com/teknokeras/golang-graphql-template/app/db"
+	_ "github.com/teknokeras/golang-graphql-template/app/db"
 	"github.com/teknokeras/golang-graphql-template/app/passwordutils"
 
 	role "github.com/teknokeras/golang-graphql-template/app/modules/core/role/model"
@@ -16,8 +16,6 @@ import (
 var ModelList = []interface{}{(*role.Role)(nil), (*user.User)(nil)}
 
 func init() {
-
-	db.init()
 
 	for _, model := range ModelList {
 		err := db.Engine.CreateTable(model, &orm.CreateTableOptions{
