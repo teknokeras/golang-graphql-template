@@ -15,9 +15,11 @@ services:
     env_file:
       - .env
     volumes:
-      - ./app:/app
+      - ./app:/workspace/app
+      - ./web:/workspace/web
     ports:
       - 5000:5000
+      - 8080:8080
     depends_on:
       - db
     tty: true
